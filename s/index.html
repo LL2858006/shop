@@ -56,11 +56,11 @@
 </style>
 </head>
 <body>
-<div class="header"><h1>乐茵珠宝</h1><p>珍珠 · 水晶手串 ｜ 选中款式后私聊店主下单</p></div>
+<div class="header"><h1>乐茵珠宝</h1><p>珍珠 · 水晶手串 ｜ 选中后私聊乐乐，看产品细节</p></div>
 <div class="wrap">
-  <div class="notice"><b>怎么买：</b>点「选这款」→ 选规格、留微信号和地址 → 复制选款单发给店主微信（<b>LL2858006</b>）→ 店主确认后转账发货。</div>
+  <div class="notice"><b>怎么买：</b>点商品看大图 → 点「选这款」→ 选规格（微信号、地址都可留可不留）→ 复制选款单，直接发给店主微信 → 店主确认后转账发货。</div>
   <div class="grid" id="grid"></div>
-  <div class="foot"><div class="w">店主微信：<b>LL2858006</b></div><div class="t">加微信备注「手串」，店主会尽快回复</div></div>
+  <div class="foot"><div class="w">直接联系店主微信</div><div class="t">加微信备注「手串」，店主会尽快回复</div></div>
 </div>
 <div class="mask" id="mask"></div>
 <div class="drawer" id="drawer">
@@ -73,22 +73,21 @@
   </div>
   <h3 id="dName"></h3><div class="d-line" id="dSpec"></div><div class="d-price" id="dPrice"></div>
   <label>规格 / 尺寸</label><input id="fSpec" placeholder="例：14cm 手围 / 8mm 珠径">
-  <label>你的微信号 或 手机号（必填）</label><input id="fContact" placeholder="方便店主联系你">
+  <label>微信号 / 手机号（选填）</label><input id="fContact" placeholder="不留也行，店主看微信就知道是谁">
   <label>收货地址（选填）</label><textarea id="fAddr" placeholder="省市区 + 详细地址 + 收件人"></textarea>
   <button class="sub" onclick="doSubmit()">生成选款单</button>
   <button class="can" onclick="closeD()">取消</button>
 </div>
 <div class="ok" id="ok">
   <div class="ic">✓</div><h2>选款单已生成</h2>
-  <p>复制选款单 → 打开微信 → 找到店主（<b id="wxName"></b>）→ 粘贴发送。</p>
+  <p>复制选款单 → 打开微信 → 找到店主微信 → 粘贴发送。</p>
   <button class="copy" onclick="copyIt()">复制选款单</button>
   <a class="copy" style="display:block;margin-top:10px;text-decoration:none;" href="weixin://" onclick="if(!confirm('将尝试打开微信，请在聊天窗口粘贴选款单发给店主'))event.preventDefault();">打开微信粘贴发送</a>
   <div class="box" id="box"></div>
   <button class="back" onclick="location.reload()">继续看别的款式</button>
 </div>
 <script>
-const GOODS = [{"name":"青提岫玉","spec":"17mm","price":60,"img":["img/p0.jpg"]},{"name":"天然珍珠草莓水晶","spec":"天然珍珠6MM ➕ 水晶 8mm","price":60,"img":["img/p1.jpg"]},{"name":"天然多宝手串","spec":"12mm 到14mm","price":39,"img":["img/p2.jpg"]},{"name":"天然珍珠粉水晶","spec":"天然珍珠6mm ➕ 粉水晶10mm","price":60,"img":["img/p3.jpg"]},{"name":"红玛瑙➕黄塔晶","spec":"规格描述","price":49,"img":["img/p4.jpg"]},{"name":"天然珍珠水晶","spec":"天然珍珠10mm ➕4mm  紫水晶 6mm 加 9mm","price":60,"img":["img/p5.jpg"]},{"name":"天然水晶珍珠","spec":"天然5.5 mm  ➕紫水晶9mm","price":39.9,"img":["img/p6.jpg"]}];
-const WX = 'LL2858006';
+const GOODS = [{"name":"青提岫玉","spec":"17mm","price":60,"img":["/shop/s/img/p0.jpg"]},{"name":"天然珍珠草莓水晶","spec":"天然珍珠6MM ➕ 水晶 8mm","price":60,"img":["/shop/s/img/p1.jpg"]},{"name":"天然多宝手串","spec":"12mm 到14mm","price":39,"img":["/shop/s/img/p2.jpg"]},{"name":"天然珍珠粉水晶","spec":"天然珍珠6mm ➕ 粉水晶10mm","price":60,"img":["/shop/s/img/p3.jpg"]},{"name":"红玛瑙➕黄塔晶","spec":"规格描述","price":49,"img":["/shop/s/img/p4.jpg"]},{"name":"天然珍珠水晶","spec":"天然珍珠10mm ➕4mm  紫水晶 6mm 加 9mm","price":60,"img":["/shop/s/img/p5.jpg"]},{"name":"天然水晶珍珠","spec":"天然5.5 mm  ➕紫水晶9mm","price":39.9,"img":["/shop/s/img/p6.jpg"]}];
 // 兼容旧数据：img 是字符串时转成数组
 GOODS.forEach(function(g){
   if(typeof g.img === 'string'){ g.img = g.img ? [g.img] : []; }
@@ -102,13 +101,13 @@ function render(){
   GOODS.forEach((x,i)=>{
     const c = document.createElement('div');
     c.className = 'card';
-    c.innerHTML = '<div class="img-wrap" '+(x.img&&x.img[0]?'style="background:url(\''+x.img[0]+'\') center/cover no-repeat"':'')+'><div class="img-num">共'+(x.img&&x.img.length?x.img.length:0)+'张</div></div><div class="info"><div class="name">'+x.name+'</div><div class="spec">'+x.spec+'</div><div class="price-row"><div class="price">'+(x.price?'¥'+x.price:'价格待定')+'</div><button class="btn" onclick="openD('+i+')">选这款</button></div></div>';
+    c.innerHTML = '<div class="img-wrap" '+(x.img&&x.img[0]?'style="background:url(\''+x.img[0]+'\') center/cover no-repeat"':'')+'><div class="img-num">共'+(x.img&&x.img.length?x.img.length:0)+'张</div></div><div class="info"><div class="name"><span style="display:inline-block;background:#c9a227;color:#fff;font-size:11px;font-weight:700;padding:1px 6px;border-radius:4px;margin-right:6px;vertical-align:2px;">'+String(i+1).padStart(2,'0')+'</span>'+x.name+'</div><div class="spec">'+x.spec+'</div><div class="price-row"><div class="price">'+(x.price?'¥'+x.price:'价格待定')+'</div><button class="btn" onclick="openD('+i+')">选这款</button></div></div>';
     g.appendChild(c);
   });
 }
 function openD(i){
   cur = GOODS[i];
-  document.getElementById('dName').textContent = cur.name;
+  document.getElementById('dName').innerHTML = '<span style="display:inline-block;background:#c9a227;color:#fff;font-size:13px;font-weight:700;padding:2px 8px;border-radius:5px;margin-right:8px;vertical-align:2px;">'+String(GOODS.indexOf(cur)+1).padStart(2,'0')+'</span>'+cur.name;
   document.getElementById('dSpec').textContent = cur.spec;
   document.getElementById('dPrice').textContent = cur.price ? '¥'+cur.price : '价格待定';
   gIdx = 0; gShow();
@@ -145,10 +144,11 @@ function gNext(){
 }
 function doSubmit(){
   const c = document.getElementById('fContact').value.trim();
-  if(!c){ alert('请填微信号或手机号'); return; }
+  // 联系方式与地址均为选填，不拦截提交
   const sp = document.getElementById('fSpec').value.trim() || '默认规格';
   const ad = document.getElementById('fAddr').value.trim();
-  const lines = ['【选款单】','款式：'+cur.name,'规格：'+sp,'价格：'+(cur.price?'¥'+cur.price:'价格待定'),'联系方式：'+c];
+  const no = String(GOODS.indexOf(cur)+1).padStart(2,'0');
+  const lines = ['【选款单】','编号：'+no,'款式：'+cur.name,'规格：'+sp,'价格：'+(cur.price?'¥'+cur.price:'价格待定'),'联系方式：'+(c||'未留')];
   if(ad) lines.push('收货地址：'+ad); else lines.push('收货地址：未留（私聊转账时再补）');
   lines.push('—','请店主联系我，谢谢');
   document.getElementById('box').textContent = lines.join('\n');
@@ -161,7 +161,6 @@ function copyIt(){
   else { const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); alert('已复制，去粘贴给店主吧'); }
 }
 document.getElementById('mask').addEventListener('click', closeD);
-document.getElementById('wxName').textContent = WX;
 render();
 </script>
 </body>
