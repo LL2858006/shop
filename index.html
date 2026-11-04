@@ -58,7 +58,7 @@
 <body>
 <div class="header"><h1>乐茵珠宝</h1><p>珍珠 · 水晶手串 ｜ 选中款式后私聊店主下单</p></div>
 <div class="wrap">
-  <div class="notice"><b>怎么买：</b>点「选这款」→ 选规格、留微信号和地址 → 复制选款单发给店主微信（<b>LL2858006</b>）→ 店主确认后转账发货。</div>
+  <div class="notice"><b>怎么买：</b>点商品看大图 → 点「选这款」→ 选规格（微信号、地址都可留可不留）→ 复制选款单发给店主微信（<b>LL2858006</b>）→ 店主确认后转账发货。</div>
   <div class="grid" id="grid"></div>
   <div class="foot"><div class="w">店主微信：<b>LL2858006</b></div><div class="t">加微信备注「手串」，店主会尽快回复</div></div>
 </div>
@@ -73,7 +73,7 @@
   </div>
   <h3 id="dName"></h3><div class="d-line" id="dSpec"></div><div class="d-price" id="dPrice"></div>
   <label>规格 / 尺寸</label><input id="fSpec" placeholder="例：14cm 手围 / 8mm 珠径">
-  <label>你的微信号 或 手机号（必填）</label><input id="fContact" placeholder="方便店主联系你">
+  <label>微信号 / 手机号（选填）</label><input id="fContact" placeholder="不留也行，店主看微信就知道是谁">
   <label>收货地址（选填）</label><textarea id="fAddr" placeholder="省市区 + 详细地址 + 收件人"></textarea>
   <button class="sub" onclick="doSubmit()">生成选款单</button>
   <button class="can" onclick="closeD()">取消</button>
@@ -102,13 +102,13 @@ function render(){
   GOODS.forEach((x,i)=>{
     const c = document.createElement('div');
     c.className = 'card';
-    c.innerHTML = '<div class="img-wrap" '+(x.img&&x.img[0]?'style="background:url(\''+x.img[0]+'\') center/cover no-repeat"':'')+'><div class="img-num">共'+(x.img&&x.img.length?x.img.length:0)+'张</div></div><div class="info"><div class="name">'+x.name+'</div><div class="spec">'+x.spec+'</div><div class="price-row"><div class="price">'+(x.price?'¥'+x.price:'价格待定')+'</div><button class="btn" onclick="openD('+i+')">选这款</button></div></div>';
+    c.innerHTML = '<div class="img-wrap" '+(x.img&&x.img[0]?'style="background:url(\''+x.img[0]+'\') center/cover no-repeat"':'')+'><div class="img-num">共'+(x.img&&x.img.length?x.img.length:0)+'张</div></div><div class="info"><div class="name"><span style="display:inline-block;background:#c9a227;color:#fff;font-size:11px;font-weight:700;padding:1px 6px;border-radius:4px;margin-right:6px;vertical-align:2px;">'+String(i+1).padStart(2,'0')+'</span>'+x.name+'</div><div class="spec">'+x.spec+'</div><div class="price-row"><div class="price">'+(x.price?'¥'+x.price:'价格待定')+'</div><button class="btn" onclick="openD('+i+')">选这款</button></div></div>';
     g.appendChild(c);
   });
 }
 function openD(i){
   cur = GOODS[i];
-  document.getElementById('dName').textContent = cur.name;
+  document.getElementById('dName').innerHTML = '<span style="display:inline-block;background:#c9a227;color:#fff;font-size:13px;font-weight:700;padding:2px 8px;border-radius:5px;margin-right:8px;vertical-align:2px;">'+String(GOODS.indexOf(cur)+1).padStart(2,'0')+'</span>'+cur.name;
   document.getElementById('dSpec').textContent = cur.spec;
   document.getElementById('dPrice').textContent = cur.price ? '¥'+cur.price : '价格待定';
   gIdx = 0; gShow();
@@ -145,10 +145,11 @@ function gNext(){
 }
 function doSubmit(){
   const c = document.getElementById('fContact').value.trim();
-  if(!c){ alert('请填微信号或手机号'); return; }
+  // 联系方式与地址均为选填，不拦截提交
   const sp = document.getElementById('fSpec').value.trim() || '默认规格';
   const ad = document.getElementById('fAddr').value.trim();
-  const lines = ['【选款单】','款式：'+cur.name,'规格：'+sp,'价格：'+(cur.price?'¥'+cur.price:'价格待定'),'联系方式：'+c];
+  const no = String(GOODS.indexOf(cur)+1).padStart(2,'0');
+  const lines = ['【选款单】','编号：'+no,'款式：'+cur.name,'规格：'+sp,'价格：'+(cur.price?'¥'+cur.price:'价格待定'),'联系方式：'+(c||'未留')];
   if(ad) lines.push('收货地址：'+ad); else lines.push('收货地址：未留（私聊转账时再补）');
   lines.push('—','请店主联系我，谢谢');
   document.getElementById('box').textContent = lines.join('\n');
