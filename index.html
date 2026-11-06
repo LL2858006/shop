@@ -58,7 +58,7 @@
 <body>
 <div class="header"><h1>乐茵珠宝</h1><p>珍珠 · 水晶手串 ｜ 选中后私聊乐乐，看产品细节</p></div>
 <div class="wrap">
-  <div class="notice"><b>怎么买：</b>点商品看大图 → 点「选这款」→ 选规格（微信号、地址都可留可不留）→ 复制选款单，直接发给店主微信 → 店主确认后转账发货。</div>
+  <div class="notice"><b>怎么买：</b>点商品看大图 → 点「选这款」→ 选规格（微信号、地址都可留可不留）→ 复制选款单，直接发给店主微信→ 店主确认后转账发货。</div>
   <div class="grid" id="grid"></div>
   <div class="foot"><div class="w">直接联系店主微信</div><div class="t">加微信备注「手串」，店主会尽快回复</div></div>
 </div>
@@ -87,7 +87,7 @@
   <button class="back" onclick="location.reload()">继续看别的款式</button>
 </div>
 <script>
-const GOODS = [{"name":"青提岫玉","spec":"17mm","price":60,"img":["/shop/s/img/p0.jpg"]},{"name":"天然珍珠草莓水晶","spec":"天然珍珠6MM ➕ 水晶 8mm","price":60,"img":["/shop/s/img/p1.jpg"]},{"name":"天然多宝手串","spec":"12mm 到14mm","price":39,"img":["/shop/s/img/p2.jpg"]},{"name":"天然珍珠粉水晶","spec":"天然珍珠6mm ➕ 粉水晶10mm","price":60,"img":["/shop/s/img/p3.jpg"]},{"name":"红玛瑙➕黄塔晶","spec":"规格描述","price":49,"img":["/shop/s/img/p4.jpg"]},{"name":"天然珍珠水晶","spec":"天然珍珠10mm ➕4mm  紫水晶 6mm 加 9mm","price":60,"img":["/shop/s/img/p5.jpg"]},{"name":"天然水晶珍珠","spec":"天然5.5 mm  ➕紫水晶9mm","price":39.9,"img":["/shop/s/img/p6.jpg"]}];
+const GOODS = [{"name":"🈚️ 青提岫玉","spec":"17mm","price":60,"img":["/shop/s/i8/p0.jpg"]},{"name":"🈚️天然珍珠草莓水晶","spec":"天然珍珠6MM ➕ 水晶 8mm","price":60,"img":["/shop/s/i8/p1.jpg"]},{"name":"天然多宝手串","spec":"12mm 到14mm","price":39,"img":["/shop/s/i8/p2.jpg"]},{"name":"天然珍珠粉水晶","spec":"天然珍珠6mm ➕ 粉水晶10mm","price":60,"img":["/shop/s/i8/p3.jpg"]},{"name":"红玛瑙➕黄塔晶","spec":"规格描述","price":49,"img":["/shop/s/i8/p4.jpg"]},{"name":"天然珍珠水晶","spec":"天然珍珠10mm ➕4mm  紫水晶 6mm 加 9mm","price":60,"img":["/shop/s/i8/p5.jpg"]},{"name":"天然淡水珍珠 满天星","spec":"S925纯银链子 ➕天然珍珠  4到5mm","price":150,"img":["/shop/s/i8/p6.jpg","/shop/s/i8/p7.jpg"]},{"name":"多宝水晶","spec":"天然水晶14 --10mm","price":60,"img":["/shop/s/i8/p8.jpg"]},{"name":"天然珍珠兔毛水晶","spec":"天然珍珠10mm 兔毛水晶8mm","price":60,"img":["/shop/s/i8/p9.jpg"]},{"name":"浅黄兔毛水晶","spec":"水晶7mm 加 镀金配饰（合金）","price":39,"img":["/shop/s/i8/p10.jpg"]},{"name":"白阿赛多宝水晶","spec":"天然水晶13mm -10mm","price":60,"img":["/shop/s/i8/p11.jpg"]},{"name":"白幽灵黄飘花","spec":"12到13mm","price":60,"img":["/shop/s/i8/p12.jpg"]}];
 // 兼容旧数据：img 是字符串时转成数组
 GOODS.forEach(function(g){
   if(typeof g.img === 'string'){ g.img = g.img ? [g.img] : []; }
